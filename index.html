@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Node to Web Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+<script>
+   window.doSomething = function(path, element) {
+     $.get(path)
+       .done(function(value2) {
+         console.log(value2)
+         document.getElementById(element).innerHTML = value2;
+       })
+       .catch(function(err) {
+         console.log('uh oh')
+       });
+    }
+
+    setInterval(function() {
+      doSomething('/sensor/temp/lounge', 'p2')
+      doSomething('/sensor/light/lounge', 'p3')
+    }, 6000)
+</script>
+
+</head>
+
+<body>
+  <p>This is a test of interacting with Node.js from a web interface</p>
+  <br>
+
+  <p>The current temperature in your house is: <span id="p2"></span>c</p>
+  <br>
+  <p>The current light level in your house is: <span id="p2"></span> Lux</p>
+  <br>
+  <p id="p4"></p>
+  <br>
+  <p id="p5"></p>
+  <br>
+  <p id="p6"></p>
+
+  <br>
+
+  <button ><a href="#" onclick="doSomething('/actuator/servo/wave', 'p4')">"click to wave"</a></button>
+  <br>
+  <button><a href="#" onclick="doSomething('/remote/tv/power', 'p5')">"Power Button"</a></button>
+  <br>
+  <button><a href="#" onclick="doSomething('/remote/tv/volumeup', 'p6')">"Volume Up"</a></button>
+  <br>
+  <button><a href="#" onclick="doSomething('/remote/tv/volumedown', 'p6')">"Volume Down"</a></button>
+  <br>
+  <button><a href="#" onclick="doSomething('/remote/tv/channelup', 'p6')">"Channel Up"</a></button>
+  <br>
+  <button><a href="#" onclick="doSomething('/remote/tv/channeldown', 'p6')">"Channel Down"</a></button>
+  <br>
+  <button><a href="#" onclick="doSomething('/remote/tv/mute', 'p6')">"Mute"</a></button>
+
+</body>
+
+</html>
