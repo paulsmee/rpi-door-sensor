@@ -1,60 +1,137 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>Node to Web Test</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>oznu dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <style>
+      body {
+        padding-top: 4rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">oznu dashboard</a>
+      </nav>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <canvas width="1600" height="900" id="myCanvas" style="width:100%;"></canvas>
+        </div>
+    </div>
+
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      drawbackground(canvas, context);
+
+      function drawbackground(canvas, context){
+        var imagePaper = new Image();
+        imagePaper.onload = function() {
+          context.drawImage(imagePaper, 0, 0, canvas.width, canvas.height);
+
+          // draw the lines after the image is loaded (so they go on top)
+          drawlines(canvas, context);
+          addLabel(canvas, context);
+        };
+        imagePaper.src = 'image.jpg';
+      }
+
+      function drawlines(canvas, context) {
+
+        // Center Room Divider
+        context.beginPath();
+        context.moveTo(100, 550);
+        context.lineTo(600, 550);
+        context.lineWidth = 10;
+        // line color
+        context.strokeStyle = 'black';
+        context.stroke();
+
+        // Diagonal Line
+        context.beginPath();
+        context.moveTo(70, 150);
+        context.lineTo(450, 50);
+        context.stroke();
+
+        // Left Border
+        context.beginPath();
+        context.moveTo(100, 100);
+        context.lineTo(100, 800);
+        context.stroke();
+
+        // Right Border
+        context.beginPath();
+        context.moveTo(1480, 100);
+        context.lineTo(1480, 800);
+        context.stroke();
+
+        // Top Left Border
+        context.beginPath();
+        context.moveTo(100, 100);
+        context.lineTo(150, 100);
+        context.stroke();
+
+        // Top Right Border
+        context.beginPath();
+        context.moveTo(350, 100);
+        context.lineTo(1480, 100);
+        context.stroke();
+
+        // Bottom Right Border
+        context.beginPath();
+        context.moveTo(1250, 800);
+        context.lineTo(1480, 800);
+        context.stroke();
+
+        // Bottom Left Border
+        context.beginPath();
+        context.moveTo(100, 800);
+        context.lineTo(1000, 800);
+        context.stroke();
+
+        // Left Interior Wall
+        context.beginPath();
+        context.moveTo(600, 300);
+        context.lineTo(100, 300);
+        context.stroke();
+
+        // Left Interior Vertical Wall
+        context.beginPath();
+        context.moveTo(600, 300);
+        context.lineTo(600, 400);
+        context.stroke();
+
+        // Bottom Part of the Above
+        context.beginPath();
+        context.moveTo(600, 700);
+        context.lineTo(600, 800);
+        context.stroke();
+      }
 
 
-<script>
-   window.doSomething = function(path, element) {
-     $.get(path)
-       .done(function(value2) {
-         console.log(value2)
-         document.getElementById(element).innerHTML = value2;
-       })
-       .catch(function(err) {
-         console.log('uh oh')
-       });
-    }
+      function addLabel(canvas, context) {
+        context.font ='30px Arial';
+        context.fillText('Ground Pin', 145, 400);
+      }
+    </script>
 
-    setInterval(function() {
-      doSomething('/sensor/temp/lounge', 'p2')
-      doSomething('/sensor/light/lounge', 'p3')
-    }, 6000)
-</script>
-
-</head>
-
-<body>
-  <p>This is a test of interacting with Node.js from a web interface</p>
-  <br>
-
-  <p>The current temperature in your house is: <span id="p2"></span>c</p>
-  <br>
-  <p>The current light level in your house is: <span id="p2"></span> Lux</p>
-  <br>
-  <p id="p4"></p>
-  <br>
-  <p id="p5"></p>
-  <br>
-  <p id="p6"></p>
-
-  <br>
-
-  <button ><a href="#" onclick="doSomething('/actuator/servo/wave', 'p4')">"click to wave"</a></button>
-  <br>
-  <button><a href="#" onclick="doSomething('/remote/tv/power', 'p5')">"Power Button"</a></button>
-  <br>
-  <button><a href="#" onclick="doSomething('/remote/tv/volumeup', 'p6')">"Volume Up"</a></button>
-  <br>
-  <button><a href="#" onclick="doSomething('/remote/tv/volumedown', 'p6')">"Volume Down"</a></button>
-  <br>
-  <button><a href="#" onclick="doSomething('/remote/tv/channelup', 'p6')">"Channel Up"</a></button>
-  <br>
-  <button><a href="#" onclick="doSomething('/remote/tv/channeldown', 'p6')">"Channel Down"</a></button>
-  <br>
-  <button><a href="#" onclick="doSomething('/remote/tv/mute', 'p6')">"Mute"</a></button>
-
-</body>
-
+  </body>
 </html>
+
