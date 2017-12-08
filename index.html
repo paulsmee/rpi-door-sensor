@@ -7,7 +7,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>oznu dashboard</title>
+    <title>Raspberry Pi</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
@@ -23,7 +23,7 @@
   <body>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#">oznu dashboard</a>
+        <a class="navbar-brand" href="#">Raspberry Pi - Door Sensors with House Diagram</a>
       </nav>
     </header>
 
@@ -37,8 +37,6 @@
     <script>
       // lets define our cords
       var blueprints = [
-        // center room divider
-        { from: [100, 550], to: [600, 550] },
 
         // Left Border
         { from: [100, 100], to: [100, 800] },
@@ -58,13 +56,16 @@
         // Bottom Left Border
         { from: [100, 800], to: [1000, 800] },
 
-        // Left Interior Wall
+        // Bedroom Divider
         { from: [600, 300], to: [100, 300] },
 
-        // Left Interior Vertical Wall
+        // Top Bedroom Wall
+        { from: [100, 550], to: [600, 550] },
+
+        // Top Interior Vertical Wall
         { from: [600, 300], to: [600, 400] },
 
-        // Bottom Part of the Above
+        // Bottom Interior Vertical Wall
         { from: [600, 700], to: [600, 800] },
       ]
 
