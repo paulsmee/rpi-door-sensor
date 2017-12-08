@@ -35,101 +35,119 @@
     </div>
 
     <script>
+      // lets define our cords
+      var blueprints = [
+        // center room divider
+        { from: [100, 550], to: [600, 550] },
+    
+        // diagonal line
+        { from: [70, 150], to: [450, 50] },
+        
+        // Left Border
+        { from: [100, 100], to: [100, 800] },
+        
+        // Right Border
+        { from: [1480, 100], to: [1480, 800] },
+        
+        // Top Left Border
+        { from: [100, 100], to: [150, 100] },
+        
+        // Top Right Border
+        { from: [350, 100], to: [1480, 100] },
+        
+        // Bottom Right Border
+        { from: [1200, 800], to: [1480, 800] },
+        
+        // Bottom Left Border
+        { from: [100, 800], to: [1000, 800] },
+        
+        // Left Interior Wall
+        { from: [600, 300], to: [100, 300] },
+        
+        // Left Interior Vertical Wall
+        { from: [600, 300], to: [600, 400] },
+        
+        // Bottom Part of the Above
+        { from: [600, 700], to: [600, 800] },
+      ]
+      
+      var doors = {
+        frontDoor: {
+          closed: { from: [1005, 800], to: [1195, 800] , color: 'red'},
+          open: { from: [1005, 800], to: [1150, 680] , color: 'green'}
+        },
+      }
+    
       var canvas = document.getElementById('myCanvas');
       var context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height);
-
-      drawbackground(canvas, context);
-
-      function drawbackground(canvas, context){
+      drawbackground();
+ 
+      function drawbackground(){
         var imagePaper = new Image();
         imagePaper.onload = function() {
           context.drawImage(imagePaper, 0, 0, canvas.width, canvas.height);
 
-          // draw the lines after the image is loaded (so they go on top)
-          drawlines(canvas, context);
-          addLabel(canvas, context);
+          // draw the house
+          drawManyLines(blueprints)
+          
+          //addLabel(context);
         };
         imagePaper.src = 'image.jpg';
       }
-
-      function drawlines(canvas, context) {
-
-        // Center Room Divider
-        context.beginPath();
-        context.moveTo(100, 550);
-        context.lineTo(600, 550);
-        context.lineWidth = 10;
-        // line color
-        context.strokeStyle = 'black';
-        context.stroke();
-
-        // Diagonal Line
-        context.beginPath();
-        context.moveTo(70, 150);
-        context.lineTo(450, 50);
-        context.stroke();
-
-        // Left Border
-        context.beginPath();
-        context.moveTo(100, 100);
-        context.lineTo(100, 800);
-        context.stroke();
-
-        // Right Border
-        context.beginPath();
-        context.moveTo(1480, 100);
-        context.lineTo(1480, 800);
-        context.stroke();
-
-        // Top Left Border
-        context.beginPath();
-        context.moveTo(100, 100);
-        context.lineTo(150, 100);
-        context.stroke();
-
-        // Top Right Border
-        context.beginPath();
-        context.moveTo(350, 100);
-        context.lineTo(1480, 100);
-        context.stroke();
-
-        // Bottom Right Border
-        context.beginPath();
-        context.moveTo(1250, 800);
-        context.lineTo(1480, 800);
-        context.stroke();
-
-        // Bottom Left Border
-        context.beginPath();
-        context.moveTo(100, 800);
-        context.lineTo(1000, 800);
-        context.stroke();
-
-        // Left Interior Wall
-        context.beginPath();
-        context.moveTo(600, 300);
-        context.lineTo(100, 300);
-        context.stroke();
-
-        // Left Interior Vertical Wall
-        context.beginPath();
-        context.moveTo(600, 300);
-        context.lineTo(600, 400);
-        context.stroke();
-
-        // Bottom Part of the Above
-        context.beginPath();
-        context.moveTo(600, 700);
-        context.lineTo(600, 800);
-        context.stroke();
+    
+      function drawManyLines(lines) {
+        
+        lines.forEach((line) => {
+          context.beginPath();
+          context.moveTo(...line.from);
+          context.lineTo(...line.to);
+          context.lineWidth = 10;
+          // line color
+          context.strokeStyle = line.color || 'black';
+          context.stroke();
+        })
+        
       }
 
-
-      function addLabel(canvas, context) {
+      function addLabel() {
         context.font ='30px Arial';
         context.fillText('Ground Pin', 145, 400);
       }
+      
+      
+      function actionDoor(door, doorTargetState) {
+        let targetDoor = doors[door]
+        
+        doorCurrentState = (doorTargetState === 'open') ? 'closed' : 'open'
+        
+        // remove the closed door line
+        context.beginPath();
+        context.moveTo(...targetDoor[doorCurrentState].from);
+        context.lineTo(...targetDoor[doorCurrentState].to);
+        context.lineWidth = 11; // slightly wider to stop any residue outline blur
+        context.strokeStyle = "#FFF";
+        context.stroke();
+        
+        // add the open door line
+        context.beginPath();
+        context.moveTo(...targetDoor[doorTargetState].from);
+        context.lineTo(...targetDoor[doorTargetState].to);
+        context.lineWidth = 10;
+        context.strokeStyle = targetDoor[doorTargetState].color;
+        context.stroke();
+      }
+      
+      setInterval(() => {
+        actionDoor('frontDoor', 'open')
+        
+        setTimeout(() => {
+          actionDoor('frontDoor', 'closed')
+        }, 2000)
+        
+      }, 4000)
+
+      
     </script>
 
   </body>
