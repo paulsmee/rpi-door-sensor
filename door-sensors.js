@@ -1,5 +1,7 @@
 var Gpio = require('pigpio').Gpio
 
+var doorstats = {}
+
 var door1 = new Gpio(4, {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
@@ -62,4 +64,4 @@ doorstats.doorTwo = door2
 doorstats.doorThree = door3
 doorstats.doorFour = door4
 
-module.exports = lightstats
+module.exports = doorstats
