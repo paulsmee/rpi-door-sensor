@@ -1,29 +1,6 @@
 var Gpio = require('pigpio').Gpio
 
 var doorstats = {}
-<<<<<<< HEAD
-=======
-
-var door1 = new Gpio(4, {
-    mode: Gpio.INPUT,
-    pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.EITHER_EDGE
-  })
-
-door1.on('interrupt', function (level) {
-      if (level == 1) {
-       console.log('Door 1 is open')
-      } else {
-        console.log('Door 1 is currently closed')
-      }
-})
-
-var door2 = new Gpio(5, {
-    mode: Gpio.INPUT,
-    pullUpDown: Gpio.PUD_DOWN,
-    edge: Gpio.EITHER_EDGE
-  })
->>>>>>> e5ccd757b53c863dc015e31b52c1d1fe53a1ebe2
 
 function door1Open(d1) {
     var randomVar
