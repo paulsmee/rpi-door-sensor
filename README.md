@@ -53,7 +53,7 @@ From the software side, you should be all set to go.
 
 ## Wiring it all up
 
-The wiring on these sensors is quite straight forward. I'm using magnetic reed switches that are N/O (Normally Open) but you can use any 2 wire temporary switch.
+The wiring on these sensors is quite straight forward. I'm using magnetic reed switches that are N/O (Normally Open) but you can use any 2 wire temporary switch. There are many ways to setup switches however the way that I am showing you will make it so that the board is aware of the switch.
 
 For each door you will need the following
 
@@ -65,14 +65,18 @@ For each door you will need the following
 
 Additionally you will need a Bread Board, some jumper wires and of course a Raspberry Pi
 
+You will need to wire up each swith as shown below
+
+
+
 ## Running the Server
-Create a webpage with an image of a house plan that will be able to visually
-represent each door both open and closed.
 
-- Status: Incomplete
+To run the server you will need to run it with root permissions
+
+```shell
+$ sudo node server.js
+```
+
+Now all you need to do is navigate to the the local webpage where it's hosted i.e. 192.168.1.2:8000
 
 
-## NPM Packages Used:
-
-[express](https://www.npmjs.com/package/express)
-[pigpio](https://www.npmjs.com/package/pigpio)
