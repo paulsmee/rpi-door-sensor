@@ -62,19 +62,19 @@
         { from: [600, 700], to: [600, 800] },
       ]
       var doors = {
-        frontDoor: {
+        door1: {
           closed: { from: [1005, 800], to: [1195, 800], color: 'red' },
           open: { from: [1005, 800], to: [1150, 680], color: 'green' }
         },
-        backDoor: {
+        door2: {
           closed: { from: [145, 100], to: [335, 100], color: 'red' },
           open: { from: [145, 100], to: [290, 220], color: 'green' }
         },
-        bed1Door: {
+        door3: {
           closed: { from: [600, 560], to: [600, 695], color: 'red' },
           open: { from: [600, 560], to: [480, 655], color: 'green' }
         },
-        bed2Door: {
+        door4: {
           closed: { from: [600, 395], to: [600, 535], color: 'red' },
           open: { from: [480, 435], to: [600, 535], color: 'green' }
         },
@@ -131,7 +131,7 @@
       
     
       function updateData() {
-        $.get('/sensor/doors')
+        $.get('/')
           .done(function(doorstats) {
             Object.entries(doorstats).forEach(function([whichDoor, status]) {
               var doorState = (status) ? 'open' : 'closed'
