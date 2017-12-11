@@ -37,38 +37,27 @@
     <script>
       // lets define our cords
       var blueprints = [
-
         // Left Border
         { from: [100, 100], to: [100, 800] },
-
         // Right Border
         { from: [1480, 100], to: [1480, 800] },
-
         // Top Left Border
         { from: [100, 100], to: [150, 100] },
-
         // Top Right Border
         { from: [340, 100], to: [1480, 100] },
-
         // Bottom Right Border
         { from: [1200, 800], to: [1480, 800] },
-
         // Bottom Left Border
         { from: [100, 800], to: [1000, 800] },
-
         // Bedroom Divider
         { from: [600, 300], to: [100, 300] },
-
         // Top Bedroom Wall
         { from: [100, 550], to: [600, 550] },
-
         // Top Interior Vertical Wall
         { from: [600, 300], to: [600, 400] },
-
         // Bottom Interior Vertical Wall
         { from: [600, 700], to: [600, 800] },
       ]
-
       var doors = {
         frontDoor: {
           closed: { from: [1005, 800], to: [1195, 800] , color: 'red'},
@@ -87,27 +76,15 @@
           open: { from: [480, 435], to: [600, 535] , color: 'green'}
         },
       }
-
       var canvas = document.getElementById('myCanvas');
       var context = canvas.getContext('2d');
       context.clearRect(0, 0, canvas.width, canvas.height);
-      drawbackground();
-
-      function drawbackground(){
-        var imagePaper = new Image();
-        imagePaper.onload = function() {
-          context.drawImage(imagePaper, 0, 0, canvas.width, canvas.height);
-
+    
           // draw the house
           drawManyLines(blueprints)
-
           //addLabel(context);
-        };
-        imagePaper.src = 'image.jpg';
-      }
 
       function drawManyLines(lines) {
-
         lines.forEach((line) => {
           context.beginPath();
           context.moveTo(...line.from);
@@ -117,20 +94,14 @@
           context.strokeStyle = line.color || 'black';
           context.stroke();
         })
-
       }
-
       function addLabel() {
         context.font ='30px Arial';
         context.fillText('Ground Pin', 145, 400);
       }
-
-
       function actionDoor(door, doorTargetState) {
         let targetDoor = doors[door]
-
         doorCurrentState = (doorTargetState === 'open') ? 'closed' : 'open'
-
         // remove the closed door line
         context.beginPath();
         context.moveTo(...targetDoor[doorCurrentState].from);
@@ -138,7 +109,6 @@
         context.lineWidth = 11; // slightly wider to stop any residue outline blur
         context.strokeStyle = "#FFF";
         context.stroke();
-
         // add the open door line
         context.beginPath();
         context.moveTo(...targetDoor[doorTargetState].from);
@@ -147,41 +117,30 @@
         context.strokeStyle = targetDoor[doorTargetState].color;
         context.stroke();
       }
-
       setInterval(() => {
         actionDoor('frontDoor', 'open')
-
         setTimeout(() => {
           actionDoor('frontDoor', 'closed')
         }, 2000)
-
       }, 4000)
       setInterval(() => {
         actionDoor('backDoor', 'open')
-
         setTimeout(() => {
           actionDoor('backDoor', 'closed')
         }, 2000)
-
       }, 4000)
       setInterval(() => {
         actionDoor('bed1Door', 'open')
-
         setTimeout(() => {
           actionDoor('bed1Door', 'closed')
         }, 2000)
-
       }, 4000)
       setInterval(() => {
         actionDoor('bed2Door', 'open')
-
         setTimeout(() => {
           actionDoor('bed2Door', 'closed')
         }, 2000)
-
       }, 4000)
-
-
     </script>
 
   </body>
