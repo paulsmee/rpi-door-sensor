@@ -49,14 +49,19 @@ If you do encounter error on installing any of the packages - most likely 'pigpi
 $ sudo npm install pigpio unsafe-perm
 ```
 
-
+From the software side, you should be all set to go.
 
 ## Wiring it all up
 
-Write the sensor file that will talk to the each sensor and pass the data to the
-webpage.
+The wiring on these sensors is quite straight forward. I'm using magnetic reed switches that are N/O (Normally Open) but you can use any 2 wire temporary switch.
 
-- Status: Incomplete
+For each door you will need the following
+
+1 x 1k ohm resistor
+1 x 10k ohm resistor
+1 x magnetic reed switch
+
+Additionally you will need a Bread Board, some jumper wires and of course a Raspberry Pi
 
 ## Running the Server
 Create a webpage with an image of a house plan that will be able to visually
