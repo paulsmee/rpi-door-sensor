@@ -2,22 +2,20 @@ var Gpio = require('pigpio').Gpio
 
 var doorstats = {}
 
-function doorOpen(doorState) {
-    var randomVar
-    randomVar = doorState / 1023 * 5
-    console.log(randomVar + 'Random Variable')
+function doorOpen(whichDoor, doorState) {
+    var randomVar = doorState / 1023 * 5 
+    console.log(whichDoor + ' = ' + randomVar)
+	doorstats[whichDoor] = randomVar
 }
 
 var door1 = new Gpio(4, {
     mode: Gpio.INPUT,
     pullUpDown: Gpio.PUD_DOWN,
     edge: Gpio.EITHER_EDGE
-  })
+})
 
 door1.on('interrupt', function (level) {
-    var door1Status = doorOpen(1, level)
-    doorstats.doorOne = door1Status
-    console.log(level + 'Raw Data')
+    doorOpen('door1', level)
 })
 
 
