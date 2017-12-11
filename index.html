@@ -127,11 +127,11 @@
       updateData()
       
       // and every 5 seconds after
-      setInterval(updateData, 5000);
+      setInterval(updateData, 500);
       
     
       function updateData() {
-        $.get('/')
+        $.get('/sensor/doors')
           .done(function(doorstats) {
             Object.entries(doorstats).forEach(function([whichDoor, status]) {
               var doorState = (status) ? 'open' : 'closed'
