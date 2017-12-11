@@ -58,7 +58,9 @@ The wiring on these sensors is quite straight forward. I'm using magnetic reed s
 For each door you will need the following
 
 1 x 1k ohm resistor
+
 1 x 10k ohm resistor
+
 1 x magnetic reed switch
 
 Additionally you will need a Bread Board, some jumper wires and of course a Raspberry Pi
