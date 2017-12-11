@@ -46,7 +46,7 @@ $ sudo npm install
 
 If you do encounter error on installing any of the packages - most likely 'pigpio' just run the following
 ```shell
-$ sudo npm install pigpio unsafe-perm
+$ sudo npm install pigpio --unsafe-perm
 ```
 
 From the software side, you should be all set to go.
