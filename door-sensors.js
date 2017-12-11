@@ -1,14 +1,14 @@
 'use strict'
 
+var _ = require('lodash')
 var Gpio = require('pigpio').Gpio
 
 var doorstats = {}
 
-function doorOpen(whichDoor, doorState) {
-    var randomVar = doorState 
-    console.log(whichDoor + ' = ' + randomVar)
-    doorstats[whichDoor] = randomVar
-}
+var doorOpen = _.throttle(function doorOpen(whichDoor, doorState) {
+    console.log(whichDoor + ' = ' + doorState)
+    doorstats[whichDoor] = !doorState
+}, 200)
 
 var door1 = new Gpio(4, {
     mode: Gpio.INPUT,
