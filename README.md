@@ -24,6 +24,32 @@ $ npm -v
 5.5.1
 ```
 
+Next thing to install is pigpio C library, some versions of Raspbian come pre-installed with this so you may not need to install it. If you do need to install it just run the following
+```shell
+$ sudo apt-get update
+$ sudo apt-get install pigpio
+```
+
+Now that you have the basics you will then need to do is clone this repo into the desired folder. I like to keep all my code together so it's easier to track of `/home/pi/src/`
+```shell
+$ git clone https://github.com/paulsmee/rpi-door-sensor.git
+```
+This repo has the following dependancies:
+[express](https://www.npmjs.com/package/express)
+[pigpio](https://www.npmjs.com/package/pigpio)
+[lodash](https://www.npmjs.com/package/lodash)
+
+Install the dependancies by running 
+```shell
+$ sudo npm install
+```
+
+If you do encounter error on installing any of the packages - most likely 'pigpio' just run the following
+```shell
+$ sudo npm install pigpio unsafe-perm
+```
+
+
 
 ## Wiring it all up
 
