@@ -67,7 +67,7 @@ Additionally you will need a Bread Board, some jumper wires and of course a Rasp
 
 You will need to wire up each swith as shown below
 
-![Wiring Diagram](https://github.com/paulsmee/rpi-door-sensor/blob/master/diagram.png-ignore)
+![Wiring Diagram](https://github.com/paulsmee/rpi-door-sensor/blob/master/diagram.png)
 
 ## Running the Server
 
