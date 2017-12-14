@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../../../favicon.ico">
+
+  <title>Raspberry Pi</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+
+  <!-- Custom styles for this template -->
+  <style>
+    body {
+      padding-top: 4rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Raspberry Pi - Door Sensors with House Diagram</a>
+    </nav>
+  </header>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <canvas width="1600" height="900" id="myCanvas" style="width:100%;"></canvas>
+      </div>
+    </div>
+
+    <script>
+      // lets define our cords
+      var blueprints = [
+        // Left Border
+        { from: [100, 100], to: [100, 800] },
+        // Right Border
+        { from: [1480, 100], to: [1480, 800] },
+        // Top Left Border
+        { from: [100, 100], to: [150, 100] },
+        // Top Right Border
+        { from: [340, 100], to: [1480, 100] },
+        // Bottom Right Border
+        { from: [1200, 800], to: [1480, 800] },
+        // Bottom Left Border
+        { from: [100, 800], to: [1000, 800] },
+        // Bedroom Divider
+        { from: [600, 300], to: [100, 300] },
+        // Top Bedroom Wall
+        { from: [100, 550], to: [600, 550] },
+        // Top Interior Vertical Wall
+        { from: [600, 300], to: [600, 400] },
+        // Bottom Interior Vertical Wall
+        { from: [600, 700], to: [600, 800] },
+      ]
+      var doors = {
+        frontDoor: {
+          closed: { from: [1005, 800], to: [1195, 800], color: 'red' },
+          open: { from: [1005, 800], to: [1150, 680], color: 'green' }
+        },
+        backDoor: {
+          closed: { from: [145, 100], to: [335, 100], color: 'red' },
+          open: { from: [145, 100], to: [290, 220], color: 'green' }
+        },
+        bed1Door: {
+          closed: { from: [600, 560], to: [600, 695], color: 'red' },
+          open: { from: [600, 560], to: [480, 655], color: 'green' }
+        },
+        bed2Door: {
+          closed: { from: [600, 395], to: [600, 535], color: 'red' },
+          open: { from: [480, 435], to: [600, 535], color: 'green' }
+        },
+      }
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // draw the house
+      drawManyLines(blueprints)
+      //addLabel(context);
+
+      function drawManyLines(lines) {
+        lines.forEach((line) => {
+          context.beginPath();
+          context.moveTo(...line.from);
+          context.lineTo(...line.to);
+          context.lineWidth = 10;
+          // line color
+          context.strokeStyle = line.color || 'black';
+          context.stroke();
+        })
+      }
+
+      function addLabel() {
+        context.font = '30px Arial';
+        context.fillText('Ground Pin', 145, 400);
+      }
+
+      function actionDoor(door, doorTargetState) {
+        let targetDoor = doors[door]
+        doorCurrentState = (doorTargetState === 'open') ? 'closed' : 'open'
+        // remove the closed door line
+        context.beginPath();
+        context.moveTo(...targetDoor[doorCurrentState].from);
+        context.lineTo(...targetDoor[doorCurrentState].to);
+        context.lineWidth = 11; // slightly wider to stop any residue outline blur
+        context.strokeStyle = "#FFF";
+        context.stroke();
+        // add the open door line
+        context.beginPath();
+        context.moveTo(...targetDoor[doorTargetState].from);
+        context.lineTo(...targetDoor[doorTargetState].to);
+        context.lineWidth = 10;
+        context.strokeStyle = targetDoor[doorTargetState].color;
+        context.stroke();
+      }
+            
+      // call as soon as page loads
+      updateData()
+      
+      // and every 5 seconds after
+      setInterval(updateData, 5000);
+      
+    
+      function updateData() {
+        $.get('/sensor/doors')
+          .done(function(doorstats) {
+            Object.entries(doorstats).forEach(function([whichDoor, status]) {
+              var doorState = (status) ? 'open' : 'closed'
+              actionDoor(whichDoor, doorState)
+            })
+          })
+          .catch(function(err) {
+            alert('An Error Occured: ' + err.message)
+          });
+      }
+      
+    </script>
+
+</body>
+
+</html>
+
